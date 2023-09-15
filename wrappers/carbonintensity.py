@@ -42,11 +42,13 @@ class CarbonIntensity:
             url = self.base_url + '/regional/regionid/{regionid}'.format(regionid=region_id)
         
         elif from_date is not None and to_date is None and region_id is None:
-            url = self.base_url + '/regional/intensity/{from_date}/fw24h'.format(from_date=from_date)
+            url = self.base_url + '/regional/intensity/{from_date}/fw24h'.format(from_date=(from_date+'T00:00Z'))
 
         elif to_date is None and from_date is not None and region_id is not None:
-            url = self.base_url + '/regional/intensity/{from_date}/fw24h/regionid/{regionid}'.format(from_date=from_date, regionid=region_id)
-            
+            url = self.base_url + '/regional/intensity/{from_date}/fw24h/regionid/{regionid}'.format(from_date=(from_date+'T00:00Z'), regionid=region_id)
+        
+        elif region_id is not None and from_date is not None and to_date is not None:
+            url = self.base_url + '/regional/intensity/{from_date}/{to_date}/regionid/{regionid}'.format(from_date=(from_date+'T00:00Z'), to_date=(to_date+'T00:00Z'), regionid=region_id)
 
         if url is None:
             return "Invalid parameters"
